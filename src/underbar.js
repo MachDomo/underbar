@@ -54,9 +54,9 @@
 
     // For Arrays
     if(Array.isArray(collection)) {
-      for (var i = 0; i < collection.length; i++) {
+      for (var index = 0; index < collection.length; index++) {
           
-            iterator(collection[i], i, collection);
+            iterator(collection[index], index, collection);
         
       }
     } else {
@@ -89,6 +89,14 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+    var result = [];
+
+    _.each(collection, function(element) {
+      if(test(element)) {
+        result.push(element);
+      }
+    });
+    return result;
   };
 
   // Return all elements of an array that don't pass a truth test.
