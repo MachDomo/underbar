@@ -186,21 +186,50 @@
     // _.reduce takes a collection. Does the iterator function on each element. Returns accumulator.
     
     var memo = accumulator;
+    var shiftArray = false;
 
-    for(var i = 0; i < collection.length; i++) {
-      if(memo === undefined) {
-        memo = collection[0];
-        i++;
-      } 
+   _.each(collection, function(value, index, collection) {
+      var item;
+      
+      if(memo === undefined ) {
+        memo = value;
+        shiftArray = true;      
+        }
 
-      var item = collection[i];
-
+      if(shiftArray) {
+        item = collection[index + 1];
+      } else {
+        item = value;
+      }
+      
       var newMemo = iterator(memo, item);
-
-      if(!(newMemo === undefined)) {
+      if(!(newMemo === undefined || item === undefined)) {
         memo = newMemo;
-      } 
-    }
+      }
+      
+    });
+    // // For Arrays
+    // if(Array.isArray(collection)) {
+    //   for(var i = 0; i < collection.length; i++) {
+    //     if(memo === undefined) {
+    //       memo = collection[0];
+    //       i++;
+    //     } 
+    //     var item = collection[i];
+    //     var newMemo = iterator(memo, item);
+    //     if(!(newMemo === undefined)) {
+    //       memo = newMemo;
+    //     } 
+    //   }
+    // } else {
+    //   // For Objects
+    //   for (var prop in collection) {
+
+    //   }
+    // }
+
+
+
     return memo;
   };
 
