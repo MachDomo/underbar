@@ -240,6 +240,34 @@
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    // check if every returns false
+    //   if it does return false, return false, else return true
+    // Should fail for an empty collection
+    // Should pass for all truthy
+    // Should fail for all falsy
+    // Should pass for mixed
+    // 
+    if(typeof(iterator) !== 'function') {
+      return (_.contains(collection, true));
+    }
+    var oneTrue = false;
+    return (_.every(collection, function(element) {
+      
+
+      if (oneTrue === true) {
+        return true;
+      }
+      if(typeof iterator === 'function') {
+        if(iterator(element)) {
+          oneTrue = true;
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+    }));
+
     
   };
 
