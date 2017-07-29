@@ -186,8 +186,7 @@
     // _.reduce takes a collection. Does the iterator function on each element. Returns accumulator.
     
     var memo = accumulator;
-    var shiftArray = false;
-
+    
    _.each(collection, function(value, index, collection) {
       
       if(index === 0) {
