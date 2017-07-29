@@ -189,47 +189,17 @@
     var shiftArray = false;
 
    _.each(collection, function(value, index, collection) {
-      var item;
       
-      if(memo === undefined ) {
-        memo = value;
-        shiftArray = true;      
-        }
-
-      if(shiftArray) {
-        item = collection[index + 1];
-      } else {
-        item = value;
-      }
-      
+      if(index === 0) {
+        if(memo === undefined) {
+          memo = value;
+          return memo;
+        }  
+      } 
+      var item = value;
       var newMemo = iterator(memo, item);
-      if(!(newMemo === undefined || item === undefined)) {
-        memo = newMemo;
-      }
-      
+      return memo = newMemo;
     });
-    // // For Arrays
-    // if(Array.isArray(collection)) {
-    //   for(var i = 0; i < collection.length; i++) {
-    //     if(memo === undefined) {
-    //       memo = collection[0];
-    //       i++;
-    //     } 
-    //     var item = collection[i];
-    //     var newMemo = iterator(memo, item);
-    //     if(!(newMemo === undefined)) {
-    //       memo = newMemo;
-    //     } 
-    //   }
-    // } else {
-    //   // For Objects
-    //   for (var prop in collection) {
-
-    //   }
-    // }
-
-
-
     return memo;
   };
 
@@ -248,13 +218,30 @@
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    // TIP: Try re-using reduce() here.
+    if(typeof(iterator) !== 'function') {
+      return !(_.contains(collection, false));
+    }
+
+    return _.reduce(collection, function(memo, item) {
+      if(memo === false) {
+        return false;
+      } 
+      if(typeof iterator === 'function') {
+        if(iterator(item)){
+          return true;
+        } else {
+          return false;
+        }
+      }    
+    }, true);
+      
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    
   };
 
 
