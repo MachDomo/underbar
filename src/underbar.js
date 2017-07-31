@@ -250,22 +250,13 @@
     if(typeof(iterator) !== 'function') {
       return (_.contains(collection, true));
     }
-    var oneTrue = false;
-    return (_.every(collection, function(element) {
-      
-
-      if (oneTrue === true) {
-        return true;
-      }
-      if(typeof iterator === 'function') {
-        if(iterator(element)) {
-          oneTrue = true;
+    
+    return !(_.every(collection, function(element) {
+        if(!(iterator(element))) {
           return true;
         } else {
           return false;
         }
-      }
-
     }));
 
     
