@@ -283,9 +283,14 @@
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
   };
-
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
+  // Specs: 
+  // 1. First argument pertains to destination object
+  // 2. Check for additional arguments
+  // 3. Iterate through additional argument objects
+  //   a. Check if key exists. True: Do nothing. False: create a key and value pair
+  
   _.defaults = function(obj) {
   };
 
