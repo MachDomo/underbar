@@ -51,23 +51,18 @@
   // Note: _.each does not have a return value, but rather simply runs the
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
-
-    // For Arrays
-    if(Array.isArray(collection)) {
-      for (var index = 0; index < collection.length; index++) {
-          
-            iterator(collection[index], index, collection);
-        
-      }
-    } else {
-        
-    // For Objects
+  // For Objects
+    if(typeof collection === 'object' && !(Array.isArray(collection)))
       for (var prop in collection) {
         iterator(collection[prop], prop, collection);
+      } else {
+  // For Arrays
+        if(Array.isArray(collection)) {
+          for (var index = 0; index < collection.length; index++) {
+            iterator(collection[index], index, collection);
+          }
+        } 
       }
-    }
-
-
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
@@ -281,17 +276,46 @@
   //   }, {
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
-  _.extend = function(obj) {
-  };
-  // Like extend, but doesn't ever overwrite a key that already
-  // exists in obj
+
+
+
   // Specs: 
   // 1. First argument pertains to destination object
   // 2. Check for additional arguments
   // 3. Iterate through additional argument objects
   //   a. Check if key exists. True: Do nothing. False: create a key and value pair
-  
+
+  _.extend = function(obj) {
+
+    var parameters = Array.prototype.slice.call(arguments);
+
+    parameters.shift(); 
+
+    _.each(parameters, function(value, index, collection) {
+      _.each(collection[index], function(value, prop, collection) {
+        obj[prop] = value;
+      });
+    });
+    return obj;
+  };
+
+  // Like extend, but doesn't ever overwrite a key that already
+  // exists in obj
+
   _.defaults = function(obj) {
+    var parameters = Array.prototype.slice.call(arguments);
+
+    parameters.shift(); 
+
+    _.each(parameters, function(value, index, collection) {
+      _.each(collection[index], function(value, prop, collection) {
+        if(!(obj.hasOwnProperty(prop))) {
+          obj[prop] = value;
+        }
+      });
+    });
+    return obj;
+
   };
 
 
