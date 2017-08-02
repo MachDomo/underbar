@@ -408,7 +408,25 @@
   // TIP: This function's test suite will ask that you not modify the original
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
+  // Fisher-Yates shuffle
   _.shuffle = function(array) {
+
+    function getRandomIntInclusive(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+    }
+    
+    var copyArray = array.slice();
+
+
+    for (var i = 0; i < copyArray.length; i++) {
+      var j = getRandomIntInclusive(0, copyArray.length - 1);
+      var k = copyArray[i];
+      copyArray[i] = copyArray[j];
+      copyArray[j] = k; 
+    }
+    return copyArray;
   };
 
 
