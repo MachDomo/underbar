@@ -359,17 +359,27 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
-
-    
-    var result = {};
-
+/* The plan for this function is to store already called arguments and returns as key value pairs.
+   Thus, when the function is called, it should check the arguments as a key against the existing memory object
+   and return the value if it exists, else, it should create the key and run the function for the value. 
+   Pseudocode:
+   Create empty object
+   If func key doesn't exist
+    Create key, return function 
+   If exists
+    Return value at key */
+    var cache = {};
     return function() {
-      if (!result.hasOwnProperty(arguments)) {
-        result[arguments] = func.apply(this, arguments);
-        
-      } 
-        return result[arguments];
-    }
+      var argString = JSON.stringify(arguments);
+      if (cache[argString] === undefined) {
+        cache[argString] = func.apply(this, arguments)
+      }
+      return cache[argString];
+   };
+
+   
+
+   
   };
 
   // Delays a function for the given number of milliseconds, and then calls
